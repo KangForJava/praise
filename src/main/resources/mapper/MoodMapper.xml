@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kjy.mapper.MoodMapper">
+    <resultMap id="moodMap" type="com.kjy.domain.Mood">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="userId" column="user_id"/>
+        <result property="praiseNum" column="praise_num"/>
+        <result property="publishTime" column="publish_time"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="moodMap">
+        select id, content, user_id, praise_num, publish_time from mood
+    </select>
+
+    <select id="findById" parameterType="java.lang.String" resultMap="moodMap">
+        select id, content, user_id, praise_num, publish_time from mood
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.kjy.domain.Mood">
+        update mood
+        <set>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="praiseNum != null">
+                praise_num = #{praiseNum},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
